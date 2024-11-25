@@ -1,0 +1,175 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "🔥 Aliko Roblox Hile Paneli 😎",
+   LoadingTitle = "🔫 Aliko Panel 💥",
+   LoadingSubtitle = "by Aliko",
+   Theme = "Ocean",
+   ConfigurationSaving = {
+      Enabled = false,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "Aliko Hub"
+   },
+   Discord = {
+      Enabled = true,
+      Invite = "https://discord.gg/tHjAAUVK6A", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+   KeySystem = true, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Kod | Aliko Hile Panel",
+      Subtitle = "Kod Sistemi",
+      Note = "Kod Discord Adresimizde (Discord Adresimiz Klaveyenize Kopyalandi)",
+      FileName = "AlikoPanelKodu", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = false, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = true, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"alikopanelkodu5036$#%^kfeaswiyioyunlarsunar5698@%%%###1513#asdJGHBjNJYIO9768kDkwWQR"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+local MainTab = Window:CreateTab("🏠 Ana Yer", nil) -- Title, Image
+local MainSection = MainTab:CreateSection("Main")
+
+Rayfield:Notify({
+   Title = "Kodu Calistirdin!!",
+   Content = "Cok Guzel bir Panel",
+   Duration = 5,
+   Image = 13047715178,
+   Actions = { -- Notification Buttons
+      Ignore = {
+         Name = "Tamam!",
+         Callback = function()
+         print("Kullanici Tamam'a Basti!")
+      end
+   },
+},
+})
+
+local Button = MainTab:CreateButton({
+   Name = "Sonsuz Ziplama",
+   Callback = function()
+       --Toggles the infinite jump between on or off on every script run
+_G.infinjump = not _G.infinjump
+
+if _G.infinJumpStarted == nil then
+	--Ensures this only runs once to save resources
+	_G.infinJumpStarted = true
+	
+	--Notifies readiness
+	game.StarterGui:SetCore("SendNotification", {Title="Aliko Hile Panel"; Text="Sonsuz Ziplama Aktif!"; Duration=5;})
+
+	--The actual infinite jump
+	local plr = game:GetService('Players').LocalPlayer
+	local m = plr:GetMouse()
+	m.KeyDown:connect(function(k)
+		if _G.infinjump then
+			if k:byte() == 32 then
+			humanoid = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass('Humanoid')
+			humanoid:ChangeState('Jumping')
+			wait()
+			humanoid:ChangeState('Seated')
+			end
+		end
+	end)
+end
+   end,
+})
+
+local Slider = MainTab:CreateSlider({
+   Name = "Yurume Hizi Kaydircisi",
+   Range = {1, 350},
+   Increment = 1,
+   Suffix = "Hiz",
+   CurrentValue = 16,
+   Flag = "sliderws", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
+   end,
+})
+
+local Slider = MainTab:CreateSlider({
+   Name = "Ziplama Gucu",
+   Range = {1, 350},
+   Increment = 1,
+   Suffix = "Hiz",
+   CurrentValue = 16,
+   Flag = "sliderjp", -- A flag is the identifier for the configuration file, make sure every element has a different flag if you're using configuration saving to ensure no overlaps
+   Callback = function(Value)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
+   end,
+})
+
+local Input = MainTab:CreateInput({
+   Name = "Hiz",
+   PlaceholderText = "1-1000",
+   RemoveTextAfterFocusLost = true,
+   Callback = function(Text)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Text)
+   end,
+})
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function TeleportToPlayer(playerName)
+local targetPlayer = Players:FindFirstChild(playerName)
+
+if targetPlayer then
+LocalPlayer.Character:MoveTo(targetPlayer.Character.HumanoidRootPart.Position)
+else
+warn("Player not found: " .. playerName)
+end
+end
+
+local Input = MainTab:CreateInput({
+Name = "Isinlanmak",
+PlaceholderText = "Kullanici Adi",
+RemoveTextAfterFocusLost = true,
+Callback = function(Text)
+TeleportToPlayer(Text)
+end
+})
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+local function FollowPlayer(playerName)
+local targetPlayer = Players:FindFirstChild(playerName)
+
+if targetPlayer then
+local character = LocalPlayer.Character
+local humanoid = character.Humanoid
+local camera = workspace.CurrentCamera
+
+local function UpdateCharacterPosition()
+local targetRootPart = targetPlayer.Character.HumanoidRootPart
+local targetPosition = targetRootPart.Position
+
+character:MoveTo(targetPosition)
+camera.CFrame = CFrame.new(character.PrimaryPart.Position, targetRootPart.Position)
+end
+
+local runService = game:GetService("RunService")
+runService.Heartbeat:Connect(UpdateCharacterPosition)
+else
+warn("Player not found: " .. playerName)
+end
+end
+
+local Input = MainTab:CreateInput({
+Name = "Takip Etmek",
+PlaceholderText = "Kullanici adi",
+RemoveTextAfterFocusLost = true,
+Callback = function(Text)
+FollowPlayer(Text)
+  end,
+})
+
+local Input = MainTab:CreateInput({
+Name = "Takip Etmek",
+PlaceholderText = "Kullanici adi",
+RemoveTextAfterFocusLost = true,
+Callback = function(Text)
+FollowPlayer(Text)
+  end,
+})
